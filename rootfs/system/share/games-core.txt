@@ -1,0 +1,10 @@
+bsdgames pool/main/b/bsdgames/bsdgames_2.17-35_amd64.deb 932964
+debconf pool/main/d/debconf/debconf_1.5.91_all.deb 121088
+gcc-14-base pool/main/g/gcc-14/gcc-14-base_14.2.0-19_amd64.deb 49432
+libc6 pool/main/g/glibc/libc6_2.41-12+deb13u4_amd64.deb 2846580
+libfl2 pool/main/f/flex/libfl2_2.6.4-8.2+b4_amd64.deb 84304
+libgcc-s1 pool/main/g/gcc-14/libgcc-s1_14.2.0-19_amd64.deb 72772
+libncurses6 pool/main/n/ncurses/libncurses6_6.5+20250216-2_amd64.deb 105036
+libstdc++6 pool/main/g/gcc-14/libstdc++6_14.2.0-19_amd64.deb 713628
+libtinfo6 pool/main/n/ncurses/libtinfo6_6.5+20250216-2_amd64.deb 348380
+wamerican pool/main/s/scowl/wamerican_2020.12.07-4_all.deb 224288

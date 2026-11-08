@@ -1,0 +1,9 @@
+pool/main/libx/libxi/libxi6_1.8.2-1_amd64.deb
+pool/main/libx/libxcursor/libxcursor1_1.2.3-1_amd64.deb
+pool/main/libx/libxinerama/libxinerama1_1.1.4-3+b4_amd64.deb
+pool/main/libx/libxfixes/libxfixes3_6.0.0-2+b4_amd64.deb
+pool/main/libx/libxrandr/libxrandr2_1.5.4-1+b3_amd64.deb
+pool/main/libx/libxxf86vm/libxxf86vm1_1.1.4-1+b4_amd64.deb
+pool/main/m/mesa-demos/mesa-utils_9.0.0-2+b2_amd64.deb
+pool/main/libg/libglu/libglu1-mesa_9.0.2-1.1+b3_amd64.deb
+pool/main/x/xfonts-base/xfonts-base_1.0.5+nmu1_all.deb

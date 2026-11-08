@@ -1,0 +1,25 @@
+# build output
+out/
+cache/
+incoming/
+
+# images and disk snapshots
+*.iso
+*.qcow2
+*.img
+*.ppm
+
+# python
+__pycache__/
+*.pyc
+
+# editor / os
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
+
+# unpacked runtime payloads (build output)
+rootfs/opt/
+
+tools/_*.py
