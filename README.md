@@ -12,11 +12,11 @@
 
 | 桌面 | 快捷设置 | 应用商店 |
 | --- | --- | --- |
-| ![桌面](out/mb2-home.png) | ![快捷设置](out/mb-shade.png) | ![应用商店](out/mb2-store.png) |
+| ![桌面](docs/screenshots/home.png) | ![快捷设置](docs/screenshots/quicksettings.png) | ![应用商店](docs/screenshots/store.png) |
 
 | 设置 | 关于设备 | 终端 |
 | --- | --- | --- |
-| ![设置](out/ft-settings.png) | ![关于](out/ft-about.png) | ![终端](out/mb-terminal.png) |
+| ![设置](docs/screenshots/settings.png) | ![关于](docs/screenshots/about.png) | ![终端](docs/screenshots/terminal.png) |
 
 ## 特性
 
@@ -28,6 +28,13 @@
 - **应用商店**：14 个应用一键安装到 `/apps`，装完立刻出现在桌面。
 - **终端**：内置 BusyBox shell，能直接跑 Linux 程序（静态或带 glibc 运行时）。
 - **中文输入**：便签内置拼音输入法（GB2312 一级字库 + 词组），本地生成，不依赖云端。
+
+## 下载
+
+- 直接跑：从 [Releases](https://github.com/krclouds/mubaios/releases/tag/v0.1) 下载 mubaiOS-0.1-x86_64.iso（14.6 MiB），
+  或自己从源码构建（见下）。
+- 启动：qemu-system-x86_64 -m 1024 -smp 4 -cdrom mubaiOS-0.1-x86_64.iso
+  （也支持烧到 U 盘、在 Legacy/CSM 模式引导）。
 
 ## 快速开始
 
