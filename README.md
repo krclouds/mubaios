@@ -16,6 +16,10 @@
 | --- | --- | --- |
 | ![桌面](docs/screenshots/home.png) | ![快捷设置](docs/screenshots/quicksettings.png) | ![应用商店](docs/screenshots/store.png) |
 
+| 开源许可 | MIT 原文 | 终端 |
+| --- | --- | --- |
+| ![开源许可](docs/screenshots/licenses.png) | ![MIT 原文](docs/screenshots/licenses-text.png) | ![终端](docs/screenshots/terminal.png) |
+
 | 设置 | 关于设备 | 终端 |
 | --- | --- | --- |
 | ![设置](docs/screenshots/settings.png) | ![关于](docs/screenshots/about.png) | ![终端](docs/screenshots/terminal.png) |
