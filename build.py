@@ -107,6 +107,7 @@ APPS = {
     "paint": {"manifest": "name=画板\nicon=画\ncolor=1abc9c\norder=30\n"},
     "terminal": {"manifest": "name=终端\nicon=终\ncolor=0f766e\norder=40\n"},
     "store": {"manifest": "name=应用商店\nicon=店\ncolor=8e44ad\norder=50\n"},
+    "licenses": {"manifest": "name=开源许可\nicon=许\ncolor=0ea5e9\norder=55\n"},
 }
 
 # Apps that live in the store payload (/store) and are copied into /apps when

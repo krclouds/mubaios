@@ -16,7 +16,9 @@ not just read: every claim below can be reproduced with the commands in
 
 The user-space of mubaiOS — PID 1, the system server, the graphics and input SDK, the
 application launcher/store, the bitmap font pipeline, the build and test tooling, and all
-19 applications — is written for this project and is released under the MIT license.
+20 applications — is written for this project and is released under the MIT license.
+
+The same statement ships inside the system: `/system/share/LICENSE`, `/system/share/OPEN_SOURCE.md`, `/system/share/THIRD_PARTY.md`, and the built-in **开源许可 / licenses** app renders them on screen (`src/licenses.c`).
 
 It is **not** derived from, and does **not** embed, any closed-source component. No
 decompiled code, no leaked SDK, no proprietary binaries, no commercial game assets are
