@@ -1,5 +1,7 @@
 # mubaiOS
 
+[![License: MIT](https://img.shields.io/badge/license-MIT-3c8527.svg)](LICENSE) [![Release](https://img.shields.io/badge/release-v0.1-6c5ce7.svg)](https://github.com/krclouds/mubaios/releases/tag/v0.1) [![Open source statement](https://img.shields.io/badge/open%20source-statement-0ea5e9.svg)](OPEN_SOURCE.md)
+
 一个**从零写起**的桌面系统：自己实现 PID 1、系统服务、图形栈和应用 SDK，跑在 Linux 内核上。
 界面直接写 `/dev/fb0`，不用 X11、不用 Qt/GTK、不用任何 GUI 框架；应用是静态链接的 ELF，放进 `/apps` 就能运行。
 
