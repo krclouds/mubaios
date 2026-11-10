@@ -5,7 +5,7 @@ ISOLINUX is the CD bootloader; pycdlib lays out the ISO 9660 filesystem and the
 El Torito boot catalog.  The kernel and the initramfs (with all the DRM/input
 modules inside) are copied onto the disc, so the ISO boots on its own.
 
-Output: out/mubaios-0.1-x86_64.iso
+Output: out/mubaios-0.2-x86_64.iso
 """
 import io
 import os
@@ -25,7 +25,7 @@ sys.path.insert(0, TOOLS)
 OUT = os.path.join(ROOT, "out")
 CACHE = os.path.join(ROOT, "cache")
 SYSLINUX_DIR = os.path.join(CACHE, "syslinux")
-ISO_PATH = os.path.join(OUT, "mubaios-0.1-x86_64.iso")
+ISO_PATH = os.path.join(OUT, "mubaios-0.2-x86_64.iso")
 
 DEBIAN = "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/s/syslinux"
 DEBS = {
@@ -52,7 +52,7 @@ LABEL debug
 """
 
 README_TXT = """\
-mubaiOS 0.1 -- an Android-shaped operating system on the Linux kernel.
+mubaiOS 0.2 -- a self-built desktop system on the Linux kernel.
 
 Boot this CD in a BIOS/CSM machine or a virtual machine.  The graphical shell
 starts automatically on the framebuffer (1280x800); use the mouse, or attach a

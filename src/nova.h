@@ -114,6 +114,7 @@ int  nova_back_hit(int x, int y);
 int  nova_input_open(NovaInput *in);
 void nova_input_close(NovaInput *in);
 int  nova_poll(NovaInput *in, NovaEvent *ev, int timeout_ms);
+int  nova_peek(NovaInput *in, NovaEvent *ev);
 int  nova_key_ascii(int keycode, int shift);
 void nova_set_screen(int w, int h);
 void nova_cursor_draw(NovaFB *fb, int x, int y);

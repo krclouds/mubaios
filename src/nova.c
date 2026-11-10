@@ -73,7 +73,7 @@ static const struct tr_pair tr_table[] = {
 	{"输入命令，回车执行", "Type a command, Enter to run"},
 	{"键盘", "Keyboard"}, {"空格", "Space"}, {"退格", "Backspace"},
 	{"回车", "Enter"}, {"小写", "Shift"}, {"大写", "SHIFT"},
-	{"mubaiOS 0.1 终端", "mubaiOS 0.1 terminal"},
+	{"mubaiOS 0.2 终端", "mubaiOS 0.2 terminal"},
 	{"命令经由 /bin/sh (BusyBox) 执行", "Commands run through /bin/sh (BusyBox)"},
 	{"试试：uname -a、ls /apps、free", "Try: uname -a, ls /apps, free"},
 	{"没有实体键盘时，点右上角「键盘」用鼠标输入", "No hardware keyboard? Tap the keyboard button"},
@@ -305,9 +305,13 @@ void nova_flush(NovaFB *fb)
 {
 	if (!fb->buf || fb->bpp != 32)
 		return;
-	for (int y = 0; y < fb->h; y++)
-		memcpy(fb->mem + (size_t)y * fb->stride,
-		       fb->buf + (size_t)y * fb->w, (size_t)fb->w * 4);
+	if ((size_t)fb->stride == (size_t)fb->w * 4) {
+		memcpy(fb->mem, fb->buf, (size_t)fb->w * fb->h * 4);
+	} else {
+		for (int y = 0; y < fb->h; y++)
+			memcpy(fb->mem + (size_t)y * fb->stride,
+			       fb->buf + (size_t)y * fb->w, (size_t)fb->w * 4);
+	}
 	fb_dirty = 0;
 	dirty_clear();
 }
@@ -423,6 +427,131 @@ void nova_gradient(NovaFB *fb, int x, int y, int w, int h, uint32_t top, uint32_
 /* text                                                                */
 /* ------------------------------------------------------------------ */
 
+/* ---------------------------------------------------------------- */
+/* font file: /system/share/font.bin (rasterised from DejaVuSansMono    */
+/* and NotoSansCJKsc at build time, 8-bit alpha)                       */
+/* ---------------------------------------------------------------- */
+
+struct fontfile {
+	unsigned char *data;
+	int ascii_first, ascii_count, aw, ah;
+	int cjk_count, cw, ch;
+	const unsigned char *ascii_tab;
+	const unsigned char *cjk_tab;
+	int loaded, ok;
+};
+
+static struct fontfile g_font;
+
+static unsigned int rd32(const unsigned char *p)
+{
+	return (unsigned int)p[0] | ((unsigned int)p[1] << 8) |
+	       ((unsigned int)p[2] << 16) | ((unsigned int)p[3] << 24);
+}
+
+static void font_init(void)
+{
+	unsigned char *buf;
+	unsigned int ver, ac, aw, ah, cc, cw, ch;
+	long size;
+	int fd, got;
+
+	if (g_font.loaded)
+		return;
+	g_font.loaded = 1;
+	fd = open("/system/share/font.bin", O_RDONLY);
+	if (fd < 0)
+		return;
+	size = (long)lseek(fd, 0, SEEK_END);
+	lseek(fd, 0, SEEK_SET);
+	if (size < 44 || size > 8 * 1024 * 1024) {
+		close(fd);
+		return;
+	}
+	buf = malloc((size_t)size);
+	if (!buf) {
+		close(fd);
+		return;
+	}
+	got = (int)read(fd, buf, (size_t)size);
+	close(fd);
+	if (got != (int)size) {
+		free(buf);
+		return;
+	}
+	if (memcmp(buf, "NOVAFONT", 8) != 0) {
+		free(buf);
+		return;
+	}
+	ver = rd32(buf + 8);
+	ac = rd32(buf + 16);
+	aw = rd32(buf + 20);
+	ah = rd32(buf + 24);
+	cc = rd32(buf + 28);
+	cw = rd32(buf + 32);
+	ch = rd32(buf + 36);
+	if (ver != 1 || aw != 8 || ah != 16 || cw != 16 || ch != 16) {
+		free(buf);
+		return;
+	}
+	g_font.data = buf;
+	g_font.ascii_first = (int)rd32(buf + 12);
+	g_font.ascii_count = (int)ac;
+	g_font.aw = (int)aw;
+	g_font.ah = (int)ah;
+	g_font.cjk_count = (int)cc;
+	g_font.cw = (int)cw;
+	g_font.ch = (int)ch;
+	g_font.ascii_tab = buf + 44;
+	g_font.cjk_tab = g_font.ascii_tab + (size_t)ac * (4 + aw * ah);
+	g_font.ok = 1;
+}
+
+static const unsigned char *font_ascii(int ch)
+{
+	int idx = ch - g_font.ascii_first;
+	int stride = 4 + g_font.aw * g_font.ah;
+
+	if (idx < 0 || idx >= g_font.ascii_count)
+		return NULL;
+	return g_font.ascii_tab + (size_t)idx * stride + 4;
+}
+
+static const unsigned char *font_cjk(unsigned int cp)
+{
+	int stride = 4 + g_font.cw * g_font.ch;
+	int lo = 0, hi = g_font.cjk_count - 1;
+
+	while (lo <= hi) {
+		int mid = (lo + hi) / 2;
+		const unsigned char *rec = g_font.cjk_tab + (size_t)mid * stride;
+		unsigned int c = rd32(rec);
+		if (c == cp)
+			return rec + 4;
+		if (c < cp)
+			lo = mid + 1;
+		else
+			hi = mid - 1;
+	}
+	return NULL;
+}
+
+static void font_blit(NovaFB *fb, int x, int y, const unsigned char *a,
+		      int w, int h, uint32_t color, int scale)
+{
+	for (int row = 0; row < h; row++)
+		for (int col = 0; col < w; col++) {
+			int alpha = a[row * w + col];
+
+			if (!alpha)
+				continue;
+			for (int sy = 0; sy < scale; sy++)
+				for (int sx = 0; sx < scale; sx++)
+					nova_blend_px(fb, x + col * scale + sx,
+						      y + row * scale + sy, color, alpha);
+		}
+}
+
 static const unsigned short *cjk_lookup(unsigned int cp)
 {
 	int lo = 0, hi = cjk_glyph_count - 1;
@@ -494,12 +623,24 @@ void nova_text(NovaFB *fb, int x, int y, const char *s, uint32_t color, int scal
 
 	if (scale < 1)
 		scale = 1;
+	font_init();
 	while (*p) {
 		utf8_next(&p, &cp);
 		if (cp < 0x80) {
 			int ch = (int)cp;
 			if (ch < 32 || ch > 126)
 				ch = '?';
+			if (g_font.ok) {
+				const unsigned char *g = font_ascii(ch);
+
+				if (!g) {
+					x += g_font.aw * scale;
+					continue;
+				}
+				font_blit(fb, x, y, g, g_font.aw, g_font.ah, color, scale);
+				x += g_font.aw * scale;
+				continue;
+			}
 			const unsigned char *glyph = font8x16[ch - 32];
 			for (int row = 0; row < 16; row++)
 				for (int col = 0; col < 8; col++)
@@ -507,6 +648,13 @@ void nova_text(NovaFB *fb, int x, int y, const char *s, uint32_t color, int scal
 						nova_fill(fb, x + col * scale, y + row * scale, scale, scale, color);
 			x += 8 * scale;
 		} else {
+			const unsigned char *g;
+
+			if (g_font.ok && (g = font_cjk(cp)) != NULL) {
+				font_blit(fb, x, y, g, g_font.cw, g_font.ch, color, scale);
+				x += g_font.cw * scale;
+				continue;
+			}
 			const unsigned short *glyph = cjk_lookup(cp);
 			if (!glyph) {
 				x += 16 * scale;
@@ -787,6 +935,14 @@ static void process_event(NovaInput *in, const struct input_event *ev)
 	default:
 		break;
 	}
+}
+
+int nova_peek(NovaInput *in, NovaEvent *ev)
+{
+	if (in->qhead == in->qtail)
+		return 0;
+	*ev = in->queue[in->qhead];
+	return 1;
 }
 
 int nova_poll(NovaInput *in, NovaEvent *ev, int timeout_ms)

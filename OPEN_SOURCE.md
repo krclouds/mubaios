@@ -5,7 +5,7 @@ file in this repository comes from, and what is *not* included. It is meant to b
 not just read: every claim below can be reproduced with the commands in
 [§6 Verification](#6-verification).
 
-- Project: **mubaiOS 0.1** (x86-64)
+- Project: **mubaiOS 0.2** (x86-64)
 - Repository: <https://github.com/krclouds/mubaios>
 - License of first-party code: **MIT** — see [LICENSE](LICENSE)
 - License of third-party components: listed per component in [THIRD_PARTY.md](THIRD_PARTY.md)
@@ -75,7 +75,7 @@ Debian, and their complete corresponding source is available from the same Debia
 
 ## 5. Distribution notes for the ISO
 
-`out/mubaios-0.1-x86_64.iso` (attached to the `v0.1` release) contains:
+`out/mubaios-0.2-x86_64.iso` (attached to the `v0.2` release) contains:
 
 - the MIT-licensed first-party user space compiled from this repository,
 - the GPL-2.0 Linux kernel and modules, and the GPL-2.0 BusyBox binary,
@@ -93,7 +93,7 @@ Run these yourself; each one checks a claim above.
 # 1. everything the image needs is built from this repository
 python build.py                 # kernel unpack + C compile + font generation + initramfs
 python build_iso.py             # ISO authoring
-sha256sum out/mubaios-0.1-x86_64.iso
+sha256sum out/mubaios-0.2-x86_64.iso
 
 # 2. the published tree is byte-identical to the local tree
 python tools/verify_pushed.py   # compares git blob ids of local files with GitHub's tree
@@ -109,7 +109,7 @@ subprocess.run(["ls", "-lh", "out/nova-initramfs.cpio.gz"])
 PY
 ```
 
-Reference values for 0.1 (recorded at release time):
+Reference values for 0.2 (recorded at release time):
 
 | Item | Value |
 | --- | --- |

@@ -1,6 +1,6 @@
 # mubaiOS 应用手册
 
-> 适用版本：mubaiOS 0.1（x86-64，Linux 6.1.0-50-amd64，initramfs）
+> 适用版本：mubaiOS 0.2（x86-64，Linux 6.1.0-50-amd64，initramfs）
 > 共 20 个应用：6 个内置、14 个在应用商店里按需安装。
 
 每个应用都是一个独立进程，从 `/apps/<id>/<id>` 启动，全屏接管 1280×800 的帧缓冲。

@@ -42,7 +42,7 @@
 #include <time.h>
 #include <unistd.h>
 
-#define VERSION "0.1"
+#define VERSION "0.2"
 
 static int console_fd = 1;
 static int shutting_down;
@@ -216,7 +216,7 @@ static void run_boot_hooks(void)
 
 static void configure_net(void)
 {
-	for (int i = 0; i < 50 && access("/sys/class/net/eth0", F_OK) != 0; i++)
+	for (int i = 0; i < 20 && access("/sys/class/net/eth0", F_OK) != 0; i++)
 		usleep(100000);
 	if (access("/sys/class/net/eth0", F_OK) != 0) {
 		printf("[ INFO ] no network interface\n");
@@ -439,8 +439,17 @@ int main(void)
 	cmdline_value("nova.shell", &shell_mode);
 	cmdline_value("nova.debug", &debug_mode);
 	load_modules();
-	usleep(300000);
-	configure_net();
+	usleep(120000);
+	/* networking does not gate the UI: set it up in the background */
+	if (fork() == 0) {
+		sigset_t empty;
+
+		setsid();
+		sigemptyset(&empty);
+		sigprocmask(SIG_SETMASK, &empty, NULL);
+		configure_net();
+		_exit(0);
+	}
 	setup_data_disk(); /* give psmouse/evdev a moment to create their nodes */
 	probe_graphics();
 	run_boot_hooks();
@@ -455,11 +464,11 @@ int main(void)
 			execl("/system/bin/inputd", "inputd", (char *)NULL);
 			_exit(127);
 		}
-		usleep(250000);
+		usleep(120000);
 	}
 
 	if (!shell_mode && access("/system/bin/system_server", X_OK) == 0) {
-		log_info("starting system_server");
+			log_info("starting system_server");
 		child = fork();
 		if (child == 0) {
 			sigset_t empty;

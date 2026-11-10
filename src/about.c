@@ -30,7 +30,7 @@ static void draw(NovaFB *fb)
 	uname(&u);
 	nova_app_header(fb, "关于");
 	nova_round_rect(fb, 60, 160, fb->w - 120, 120, 18, 0x1b2030);
-	nova_text(fb, 92, 180, "mubaiOS 0.1", NOVA_WHITE, 3);
+	nova_text(fb, 92, 180, "mubaiOS 0.2", NOVA_WHITE, 3);
 	nova_text(fb, 92, 228, "自研用户态 + Linux 内核的桌面系统", NOVA_DIM, 1);
 
 	const char *labels[6] = {"内核", "架构", "分辨率", "内存", "根文件系统", "应用"};

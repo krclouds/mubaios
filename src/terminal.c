@@ -235,7 +235,7 @@ int main(void)
 	if (nova_input_open(&in) < 0)
 		return 1;
 
-	add_line("mubaiOS 0.1 终端");
+	add_line("mubaiOS 0.2 终端");
 	add_line("命令经由 /bin/sh (BusyBox) 执行");
 	add_line("试试：uname -a、ls /apps、free");
 	add_line("没有实体键盘时，点右上角「键盘」用鼠标输入");

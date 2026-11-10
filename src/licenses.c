@@ -14,7 +14,7 @@
 
 static const char *left_lines[] = {
 	"H 本项目（MIT）",
-	"B src/       24 个 .c，5 786 行",
+	"B src/       25 个 .c，5 899 行",
 	"B            用户态全部在这里",
 	"B build.py   内核、编译、字库、initramfs",
 	"B build_iso.py  BIOS 可引导 ISO",
@@ -87,8 +87,8 @@ static void draw_page1(NovaFB *fb)
 	nova_app_header(fb, "开源许可");
 
 	nova_round_rect(fb, 60, 146, fb->w - 120, 118, 18, 0x14263a);
-	nova_text(fb, 92, 164, "mubaiOS 0.1", NOVA_WHITE, 3);
-	int tag_x = 92 + nova_text_width("mubaiOS 0.1", 3) + 28;
+	nova_text(fb, 92, 164, "mubaiOS 0.2", NOVA_WHITE, 3);
+	int tag_x = 92 + nova_text_width("mubaiOS 0.2", 3) + 28;
 	nova_round_rect(fb, tag_x, 172, 176, 40, 12, 0x0e7490);
 	nova_text(fb, tag_x + 18, 182, "MIT License", 0xffffff, 2);
 	nova_text(fb, 92, 222, "用户态全部开源，从源码可重建同一个镜像", NOVA_DIM, 1);

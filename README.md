@@ -1,13 +1,13 @@
 # mubaiOS
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-3c8527.svg)](LICENSE) [![Release](https://img.shields.io/badge/release-v0.1-6c5ce7.svg)](https://github.com/krclouds/mubaios/releases/tag/v0.1) [![Open source statement](https://img.shields.io/badge/open%20source-statement-0ea5e9.svg)](OPEN_SOURCE.md)
+[![License: MIT](https://img.shields.io/badge/license-MIT-3c8527.svg)](LICENSE) [![Release](https://img.shields.io/badge/release-v0.2-6c5ce7.svg)](https://github.com/krclouds/mubaios/releases/tag/v0.2) [![Open source statement](https://img.shields.io/badge/open%20source-statement-0ea5e9.svg)](OPEN_SOURCE.md)
 
 一个**从零写起**的桌面系统：自己实现 PID 1、系统服务、图形栈和应用 SDK，跑在 Linux 内核上。
 界面直接写 `/dev/fb0`，不用 X11、不用 Qt/GTK、不用任何 GUI 框架；应用是静态链接的 ELF，放进 `/apps` 就能运行。
 
-- 版本：0.1（x86-64）
+- 版本：0.2（x86-64）
 - 内核：Linux 6.1（Debian `6.1.0-50-amd64`）
-- 镜像：`out/mubaios-0.1-x86_64.iso`（**14.6 MiB**，BIOS/CSM 直接引导）
+- 镜像：`out/mubaios-0.2-x86_64.iso`（**15.2 MiB**，BIOS/CSM 直接引导）
 - 许可：**MIT**（自研部分），第三方组件见 [THIRD_PARTY.md](THIRD_PARTY.md)
 
 ## 界面
@@ -38,9 +38,9 @@
 
 ## 下载
 
-- 直接跑：从 [Releases](https://github.com/krclouds/mubaios/releases/tag/v0.1) 下载 mubaiOS-0.1-x86_64.iso（14.6 MiB），
+- 直接跑：从 [Releases](https://github.com/krclouds/mubaios/releases/tag/v0.2) 下载 mubaiOS-0.2-x86_64.iso（15.2 MiB），
   或自己从源码构建（见下）。
-- 启动：qemu-system-x86_64 -m 1024 -smp 4 -cdrom mubaiOS-0.1-x86_64.iso
+- 启动：qemu-system-x86_64 -m 1024 -smp 4 -cdrom mubaiOS-0.2-x86_64.iso
   （也支持烧到 U 盘、在 Legacy/CSM 模式引导）。
 
 ## 快速开始

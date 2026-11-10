@@ -284,7 +284,7 @@ def build_binaries(zig):
     for src in sources:
         name = os.path.splitext(os.path.basename(src))[0]
         out = os.path.join(OUT, "build", name)
-        cmd = [zig, "cc", "-target", "x86_64-linux-musl", "-static", "-Os", "-s",
+        cmd = [zig, "cc", "-target", "x86_64-linux-musl", "-static", "-O2", "-s",
                "-fno-stack-protector", "-Wall", "-Wextra", "-Wno-unused-parameter",
                "-I", os.path.join(ROOT, "src"), "-o", out, src,
                os.path.join(ROOT, "src", "nova.c"), "-lm"]
